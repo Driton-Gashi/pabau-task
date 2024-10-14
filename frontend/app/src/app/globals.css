@@ -1,6 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css");
+@import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap");
+
+/* SweetAlert BUtton color fix */
+.swal2-confirm{
+  background-color: #7066e0;
+}
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -16,18 +23,136 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f6f6f6;
+  max-width: 100%!important;
+}
+.box {
+  width: 600px;
+  border-bottom: 20px solid #03a9f4;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.box h2 {
+  color: #fff;
+  background: #03a9f4;
+  padding: 10px 20px;
+  font-size: 20px;
+  font-weight: 700;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.box h2 button{
+  background-color: #25bcff;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  transition: 0.3s ease all;
+}
+.box h2 button:hover{
+  background-color: #f6f6f6;
+  color: #222;
+}
+.box ul {
+  position: relative;
+  background: #fff;
+}
+
+.box .deleteButton{
+  position: absolute;
+    right: 1rem;
+    background-color: #25bcff;
+    padding: 0.3rem 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 5px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.box ul li:hover .deleteButton{
+  background-color: #f6f6f6;
+color: #222;
+}
+
+.box ul li {
+  position: relative;
+  list-style: none;
+  padding: 10px;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+  transition: transform 0.5s;
+}
+.box:not(.form) ul li:hover {
+  transform: scale(1.1);
+  z-index: 5;
+  background: #25bcff;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  opacity: 1;
+}
+.box ul li span {
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  background: #25bcff;
+  color: #fff;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  transform: translateY(-2px);
+}
+.box ul li:hover span {
+  background: #fff;
+  color: #25bcff;
+}
+
+.form-group label{
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.form-group input{
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 0.3rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.submitButton{
+  background-color: #25bcff;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  transition: 0.3s ease all;
+  color: #fff;
+  border: 1px solid transparent;
+  margin: 1rem;
+
+}
+.submitButton:hover{
+  background-color: #f6f6f6;
+  color: #222;
+  border: 1px solid #25bcff;
+}
+.center{
+  text-align: center;
 }

@@ -1,9 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2/promise'); // Using promise-based API
+const cors = require('cors'); 
 
 const app = express();
 const port = 5000;
+
+// Me leju CORS me bo requesta prej localhost:3000
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
 
 const pool = mysql.createPool({
   host: 'mysql',

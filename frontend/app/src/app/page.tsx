@@ -1,21 +1,54 @@
-async function getBookings() {
-  const res = await fetch('http://host.docker.internal:5000/api/bookings', { cache: 'no-store', mode: 'no-cors' })
- 
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
+"use client";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+const Home: React.FC = () => {
+  const [bookings, setBookings] = useState<any[]>([]); // Use state for managing bookings
+  const Swal = require('sweetalert2')
+
+  useEffect(() => {
+    async function fetchBookings() {
+      try {
+        const res = await fetch('http://localhost:5000/api/bookings', { cache: 'no-store' });
+        if (!res.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const data = await res.json();
+        setBookings(data);
+      } catch (error) {
+        console.error('Error fetching bookings:', error);
+      }
+    }
+
+    fetchBookings();
+  }, []); 
+
+  function formatDate(isoDate: string) {
+    const date = new Date(isoDate);
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    return date.toLocaleDateString('en-US', options);
   }
- 
-  return res.json()
-}
 
-const Home: React.FC = async () => {
-
-  const bookings = await getBookings()
 
   return (
-    <div>
-      <h1>Current booking count: {bookings.length}</h1>
-
+    <div className="container">
+      <div className="box">
+        <h2>
+          <span>Pabau Task</span> <Link href="/booking/new"><button>Book Now</button></Link>
+        </h2>
+        <ul>
+          {bookings.map((booking) => (
+            <li key={booking.id}>
+                <span>{booking.id}</span>
+                A Booking on {formatDate(booking.date)} starting at {booking.start_time}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
