@@ -3,8 +3,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const Home: React.FC = () => {
-  const [bookings, setBookings] = useState<any[]>([]); // Use state for managing bookings
-  const Swal = require('sweetalert2')
+  const [bookings, setBookings] = useState<any[]>([]);
 
   useEffect(() => {
     async function fetchBookings() {
@@ -33,7 +32,6 @@ const Home: React.FC = () => {
     return date.toLocaleDateString('en-US', options);
   }
 
-
   return (
     <div className="container">
       <div className="box">
@@ -43,8 +41,10 @@ const Home: React.FC = () => {
         <ul>
           {bookings.map((booking) => (
             <li key={booking.id}>
-                <span>{booking.id}</span>
-                A Booking on {formatDate(booking.date)} starting at {booking.start_time}
+              <Link href={`/booking/${booking.id}`}>
+              <span>{booking.id}</span>
+              A Booking on {formatDate(booking.date)} starting at {booking.start_time}
+              </Link>
             </li>
           ))}
         </ul>

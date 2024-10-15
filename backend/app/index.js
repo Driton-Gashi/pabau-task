@@ -23,6 +23,25 @@ const pool = mysql.createPool({
 
 app.use(bodyParser.json());
 
+
+// API endpoint to fetch 1 booking
+app.get('/api/booking/:id', async (req, res) => {
+  try {
+    const bookingId = req.params.id;
+    const [rows] = await pool.query('SELECT * FROM bookings WHERE id = ?', [bookingId]);
+    
+    if (rows.length === 0) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    res.status(200).json(rows[0]); 
+  } catch (error) {
+    console.error('Error fetching booking:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
 // API endpoint to fetch bookings
 app.get('/api/bookings', async (req, res) => {
   try {
