@@ -39,10 +39,10 @@ const Home: React.FC = () => {
           <span>Pabau Task</span> <Link href="/booking/new"><button>Book Now</button></Link>
         </h2>
         <ul>
-          {bookings.map((booking) => (
+          {bookings.map((booking, index) => (
             <li key={booking.id}>
               <Link href={`/booking/${booking.id}`}>
-              <span>{booking.id}</span>
+              <span>{index + 1}</span>
               A Booking on {formatDate(booking.date)} starting at {booking.start_time}
               </Link>
             </li>

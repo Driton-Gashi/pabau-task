@@ -156,3 +156,8 @@ color: #222;
 .center{
   text-align: center;
 }
+@media(max-width:768px){
+  body{
+    padding: 0 1rem;
+  }
+}
