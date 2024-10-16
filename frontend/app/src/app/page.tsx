@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 const Home: React.FC = () => {
   const [bookings, setBookings] = useState<any[]>([]);
-
+  const Swal = require('sweetalert2');
   useEffect(() => {
     async function fetchBookings() {
       try {
@@ -32,6 +32,42 @@ const Home: React.FC = () => {
     return date.toLocaleDateString('en-US', options);
   }
 
+  const deleteBooking = async (id: number) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You Are about to delete this booking ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await fetch(`http://localhost:5000/api/booking/${id}`, {
+            method: 'DELETE',
+          });
+    
+          if (res.ok) {
+            // Me hek elementin qe osht fshij prej Listes
+            setBookings(prevBookings => prevBookings.filter(booking => booking.id !== id));
+          } else {
+            const errorData = await res.json();
+            console.error('Failed to delete booking:', errorData.message);
+          }
+        } catch (error) {
+          console.error('Error deleting booking:', error);
+        }
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "This Booking has been deleted.",
+          icon: "success"
+        });
+      }
+    });
+  };
+  
   return (
     <div className="container">
       <div className="box">
@@ -45,6 +81,7 @@ const Home: React.FC = () => {
               <span>{index + 1}</span>
               A Booking on {formatDate(booking.date)} starting at {booking.start_time}
               </Link>
+              <button className="deleteButton" onClick={() => deleteBooking(booking.id)}>x</button>
             </li>
           ))}
         </ul>

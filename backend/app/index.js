@@ -67,6 +67,30 @@ app.post('/api/bookings', async (req, res) => {
   }
 });
 
+// API endpoint to delete a booking
+app.delete('/api/booking/:id', async (req, res) => {
+  try {
+    const bookingId = req.params.id;
+
+    if (isNaN(bookingId)) {
+      return res.status(400).json({ message: 'Invalid booking ID' });
+    }
+
+    const [result] = await pool.query('DELETE FROM bookings WHERE id = ?', [bookingId]);
+
+    // Check if any rows were affected (i.e., if a booking was deleted)
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    // Send a 204 No Content response
+    res.status(204).send();
+  } catch (error) {
+    console.error('Error deleting booking:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
